@@ -9,6 +9,9 @@ import guru.springframework.spring6_webapp.repositories.PublisherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Component
 public class BootstrapData implements CommandLineRunner {
 
@@ -37,8 +40,8 @@ public class BootstrapData implements CommandLineRunner {
         Book dddSaved = bookRepository.save(ddd);
 
         Author rod = new Author();
-        eric.setFirstName("Rod");
-        eric.setLastName("Johnson");
+        rod.setFirstName("Rod");
+        rod.setLastName("Johnson");
 
         Book noEJB = new Book();
         noEJB.setTitle(("J2EE Development without EJB"));
@@ -49,13 +52,12 @@ public class BootstrapData implements CommandLineRunner {
 
         ericSaved.getBooks().add(dddSaved);
         rodSaved.getBooks().add(noEJBSaved);
+        dddSaved.getAuthors().add(ericSaved);
+        noEJBSaved.getAuthors().add(rodSaved);
 
         Publisher publisher = new Publisher();
         publisher.setPublisherName("Eric Publishing");
         publisher.setAddress("Rua Percebe");
-        publisher.setCity("Buttle");
-        publisher.setZip("90002");
-        publisher.setState("Montana");
         Publisher savedPublisher = publisherRepository.save(publisher);
 
         dddSaved.setPublisher(savedPublisher);
