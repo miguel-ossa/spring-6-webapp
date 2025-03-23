@@ -2,8 +2,10 @@ package guru.springframework.spring6_webapp.bootstrap;
 
 import guru.springframework.spring6_webapp.domain.Author;
 import guru.springframework.spring6_webapp.domain.Book;
+import guru.springframework.spring6_webapp.domain.Publisher;
 import guru.springframework.spring6_webapp.repositories.AuthorRepository;
 import guru.springframework.spring6_webapp.repositories.BookRepository;
+import guru.springframework.spring6_webapp.repositories.PublisherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -12,10 +14,13 @@ public class BootstrapData implements CommandLineRunner {
 
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
+    private final PublisherRepository publisherRepository;
 
-    public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository) {
+    public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository,
+                         PublisherRepository publisherRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
+        this.publisherRepository = publisherRepository;
     }
 
     @Override
@@ -48,9 +53,21 @@ public class BootstrapData implements CommandLineRunner {
         authorRepository.save(ericSaved);
         authorRepository.save(rodSaved);
 
+        Publisher pub = new Publisher();
+        pub.setPublisherName("Eric Publishing");
+        pub.setAddress("Rua Percebe");
+        pub.setCity("Buttle");
+        pub.setZip("90002");
+        pub.setState("Montana");
+
+        Publisher pubSaved = publisherRepository.save(pub);
+
+        publisherRepository.save(pubSaved);
+
         System.out.println(("In Bootstrap"));
         System.out.println("Author Count: " + authorRepository.count());
         System.out.println("Book Count: " + bookRepository.count());
+        System.out.println("Publisher Count: " + publisherRepository.count());
 
     }
 }
